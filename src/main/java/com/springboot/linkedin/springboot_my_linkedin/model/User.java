@@ -1,9 +1,7 @@
 package com.springboot.linkedin.springboot_my_linkedin.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -13,17 +11,27 @@ public class User {
     private int id;
     private String emailId;
     private String userName;
-
-
     private String password;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Skills> skill;
+
+    @OneToOne(mappedBy = "userId")
+    private Profile profile;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Education> education;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Experience> experience;
 
     public User() {
 
     }
 
 
-    public User(int id, String emailId, String userName, String password) {
-        this.id = id;
+    public User( String emailId, String userName, String password) {
+
         this.emailId = emailId;
         this.userName = userName;
         this.password = password;

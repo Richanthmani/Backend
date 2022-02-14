@@ -10,4 +10,5 @@ public class SpringbootMyLinkedinApplication {
         SpringApplication.run(SpringbootMyLinkedinApplication.class, args);
     }
 
+
 }

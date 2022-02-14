@@ -1,6 +1,8 @@
 package com.springboot.linkedin.springboot_my_linkedin.controller;
 
+import com.springboot.linkedin.springboot_my_linkedin.model.Profile;
 import com.springboot.linkedin.springboot_my_linkedin.model.User;
+import com.springboot.linkedin.springboot_my_linkedin.service.ProfileService;
 import com.springboot.linkedin.springboot_my_linkedin.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,9 @@ public class RegistrationController {
 
   @Autowired
   private RegistrationService service;
+
+    @Autowired
+    private ProfileService pservice;
   @PostMapping("/registeruser")
   @CrossOrigin(origins = "http://localhost:4200")
   public User registerUser(@RequestBody User user) throws Exception{
@@ -17,10 +22,12 @@ public class RegistrationController {
     if(tempEmailId!=null && !"".equals(tempEmailId)){
        User userObj= service.fetchUserByEmailId(tempEmailId);
        if(userObj!=null){
-         throw new Exception("user with this"+ tempEmailId + "is already exists");
+         throw new Exception("user with this "+ tempEmailId + " is already exists");
        }
     }
     User userObj = null;
+    //Profile profileObj=null;
+    //profileObj= pservice.save(profile);
     userObj=service.saveUser(user);
     return userObj;
 

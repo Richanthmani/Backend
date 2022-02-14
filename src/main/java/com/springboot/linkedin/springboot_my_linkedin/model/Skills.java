@@ -1,22 +1,48 @@
 package com.springboot.linkedin.springboot_my_linkedin.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Skills {
 
     @Id
-    private int s_id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
     private String skill;
 
-    public Skills() {
+    @ManyToOne
+    @JoinColumn(name="userId")
+    @JsonIgnore
+    private User userId;
+
+    public Skills( ) {
 
     }
 
-    public Skills(int s_id, String skill) {
-        this.s_id = s_id;
+    public Skills(String skill, User userId) {
         this.skill = skill;
+        this.userId = userId;
+    }
+
+
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSkill() {
@@ -25,13 +51,5 @@ public class Skills {
 
     public void setSkill(String skill) {
         this.skill = skill;
-    }
-
-    public int getS_id() {
-        return s_id;
-    }
-
-    public void setS_id(int s_id) {
-        this.s_id = s_id;
     }
 }
