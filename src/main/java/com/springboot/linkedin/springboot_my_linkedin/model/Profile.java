@@ -1,5 +1,7 @@
 package com.springboot.linkedin.springboot_my_linkedin.model;
 
+import com.mysql.cj.jdbc.Blob;
+
 import javax.persistence.*;
 import java.util.Date;
 
