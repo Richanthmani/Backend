@@ -28,18 +28,9 @@ public class SkillsController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/addskill/{userId}")
     public Skills addSkill(@RequestBody Skills skill, @PathVariable int userId) throws Exception {
-        String tempSkill = skill.getSkill();
-        User tempId = repo.findById(userId);
-        if (tempSkill != null && tempSkill != "") {
-            Skills skillObj = service.fetchSkillByUserIdAndSkill(tempId, tempSkill);
-            if (skillObj != null) {
-                throw new Exception("this skill " + tempSkill + " is already added");
-            }
-        }
-        if (tempSkill == "") {
-            throw new Exception("please enter a skill");
-        }
+
         Skills skillObj = null;
+        service.skillExists(skill,userId);
         skillObj = service.saveSkill(skill, userId);
         return skillObj;
     }
@@ -59,18 +50,9 @@ public class SkillsController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateskill/{userId}")
     public List<Skills> updateSkillById(@RequestBody Skills skill, @PathVariable int userId) throws Exception {
-       /* String tempSkill = skill.getSkill();
-        User tempId = repo.findById(userId);
-        if (tempSkill != null && tempSkill != "") {
-            Skills skillObj = service.fetchSkillByUserIdAndSkill(tempId, tempSkill);
-            if (skillObj != null) {
-                throw new Exception("this skill " + tempSkill + " is already added");
-            }
-        }
-        if (tempSkill == "") {
-            throw new Exception("please enter a skill");
-        }*/
 
+        Skills skillObj = null;
+        service.skillExists(skill,userId);
         return service.fetchSkillByIdAfterUpdation(skill,userId);
 
     }

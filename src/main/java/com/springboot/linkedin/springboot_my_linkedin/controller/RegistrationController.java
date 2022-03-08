@@ -18,16 +18,10 @@ public class RegistrationController {
   @PostMapping("/registeruser")
   @CrossOrigin(origins = "http://localhost:4200")
   public User registerUser(@RequestBody User user) throws Exception{
-    String tempEmailId=user.getEmailId();
-    if(tempEmailId!=null && !"".equals(tempEmailId)){
-       User userObj= service.fetchUserByEmailId(tempEmailId);
-       if(userObj!=null){
-         throw new Exception("user with this "+ tempEmailId + " is already exists");
-       }
-    }
+
     User userObj = null;
-    //Profile profileObj=null;
-    //profileObj= pservice.save(profile);
+
+    service.userExists(user);
     userObj=service.saveUser(user);
     return userObj;
 
@@ -35,16 +29,8 @@ public class RegistrationController {
   @PostMapping("/login")
   @CrossOrigin(origins = "http://localhost:4200")
   public User loginUser(@RequestBody User user) throws Exception{
-      String tempEmailId=user.getEmailId();
-      String tempPass=user.getPassword();
       User userObj=null;
-      if(tempEmailId !=null && tempPass !=null){
-          userObj=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
-
-      }
-      if(userObj==null){
-          throw new Exception("Bad credentials");
-      }
+      userObj=service.correctUser(user);
       return userObj;
   }
 }
