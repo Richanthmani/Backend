@@ -19,6 +19,22 @@ public class SkillsService {
     private RegistrationRepository repo;
 
 
+    public Skills skillExists(Skills skill,int userId) throws Exception{
+        String tempSkill = skill.getSkill();
+        User tempId = repo.findById(userId);
+        if (tempSkill != null && tempSkill != "") {
+            Skills skillObj = this.fetchSkillByUserIdAndSkill(tempId, tempSkill);
+            if (skillObj != null) {
+                throw new Exception("this skill " + tempSkill + " is already added");
+            }
+        }
+        if (tempSkill == "") {
+            throw new Exception("please enter a skill");
+        }
+        Skills skillObj = null;
+
+        return skillObj;
+    }
 
     public Skills saveSkill(Skills skill,int userId){
         return srepo.save(new Skills(skill.getSkill(),repo.findById(userId)));

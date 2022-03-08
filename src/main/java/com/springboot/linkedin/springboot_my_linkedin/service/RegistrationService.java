@@ -20,6 +20,30 @@ public class RegistrationService {
          return newUser;
 
     }
+    public User userExists(User user) throws Exception {
+        String tempEmailId = user.getEmailId();
+        User userObj = null;
+        if (tempEmailId != null && !"".equals(tempEmailId)) {
+            userObj = this.fetchUserByEmailId(tempEmailId);
+            if (userObj != null) {
+                throw new Exception("user with this " + tempEmailId + " is already exists");
+            }
+        }
+        return userObj;
+    }
+    public User correctUser(User user) throws Exception{
+        String tempEmailId=user.getEmailId();
+        String tempPass=user.getPassword();
+        User userObj=null;
+        if(tempEmailId !=null && tempPass !=null){
+            userObj=this.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
+
+        }
+        if(userObj==null){
+            throw new Exception("Bad credentials");
+        }
+        return userObj;
+    }
     public User fetchUserByEmailId(String email){
          return repo.findByEmailId(email);
     }
